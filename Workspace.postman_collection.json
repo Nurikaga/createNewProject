@@ -29,6 +29,16 @@
 				}
 			],
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"url": {
@@ -214,11 +224,6 @@
 							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"created\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.created).to.eql(1646791124142);\r",
-							"});\r",
-							"\r",
 							"pm.test(\"description\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"\");\r",
 							"});\r",
@@ -330,7 +335,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"\",\r\n    \"created\": \"2022-03-09T01:58:44.142Z\",\r\n    \"lastModified\": \"2021-10-09T01:58:44.142Z\",\r\n    \"userId\": \"{{userId}}\",\r\n    \"workspaceId\": \"{{workspaceId}}\",\r\n    \"name\": \"KN\",\r\n    \"description\": \"\",\r\n    \"type\": \"DESIGN\",\r\n    \"tags\": []\r\n}"
+					"raw": "{\r\n    \"id\": \"\",\r\n    \"created\": \"2022-03-09T01:58:44.142Z\",\r\n    \"lastModified\": \"2021-10-09T01:58:44.142Z\",\r\n    \"userId\": \"{{userId}}\",\r\n    \"workspaceId\": \"{{workspaceId}}\",\r\n    \"name\": \"KN valid #\",\r\n    \"description\": \"\",\r\n    \"type\": \"DESIGN\",\r\n    \"tags\": []\r\n}"
 				},
 				"url": {
 					"raw": "https://api.octoperf.com/design/projects",
@@ -376,22 +381,13 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"created\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"1646791124142\");\r",
-							"});\r",
 							"\r",
-							"pm.test(\"description\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"\");\r",
-							"});\r",
 							"\r",
 							"pm.test(\"tags\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.tags).to.eql([]);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"name\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"KN name ya\");\r",
-							"});\r",
 							"\r",
 							"pm.test(\"type\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"DESIGN\");\r",
@@ -436,7 +432,8 @@
 					},
 					{
 						"key": "authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvY3RvcGVyZiIsImlkIjoiaC1GdWNvQUJudEpCSTJ6NjQydFMiLCJleHAiOjE2NjgxMzg1NzcsImlhdCI6MTY2ODA1MjE3NywiaGFzaCI6ImRlMzE3Y2E3NTlmODQ5NjIxOTNlZjZhYWNjMTlmNjk5In0.zYVXw-fxxJH-ByTht6j1p3PnIdMmks6lqYvCz4GqzPk"
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvY3RvcGVyZiIsImlkIjoiaC1GdWNvQUJudEpCSTJ6NjQydFMiLCJleHAiOjE2NjgxMzg1NzcsImlhdCI6MTY2ODA1MjE3NywiaGFzaCI6ImRlMzE3Y2E3NTlmODQ5NjIxOTNlZjZhYWNjMTlmNjk5In0.zYVXw-fxxJH-ByTht6j1p3PnIdMmks6lqYvCz4GqzPk",
+						"disabled": true
 					},
 					{
 						"key": "content-type",
@@ -485,7 +482,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"created\": 1646791124142,\r\n    \"description\": \"\",\r\n    \"id\": \"{{projectId}}\",\r\n    \"lastModified\": 1668127716883,\r\n    \"name\": \"KN name ya\",\r\n    \"tags\": [],\r\n    \"type\": \"DESIGN\",\r\n    \"userId\": \"{{userId}}\",\r\n    \"workspaceId\": \"{{workspaceId}}\"\r\n}"
+					"raw": "{\r\n    \"created\": 1646791124142,\r\n    \"description\": \"\",\r\n    \"id\": \"{{projectId}}\",\r\n    \"lastModified\": 1668127716883,\r\n    \"name\": \"KN valid yes\",\r\n    \"tags\": [],\r\n    \"type\": \"DESIGN\",\r\n    \"userId\": \"{{userId}}\",\r\n    \"workspaceId\": \"{{workspaceId}}\"\r\n}"
 				},
 				"url": {
 					"raw": "https://api.octoperf.com/design/projects/{{projectId}}",
@@ -517,7 +514,7 @@
 			"response": []
 		},
 		{
-			"name": "delelteProject",
+			"name": "deleteProject",
 			"event": [
 				{
 					"listen": "test",
@@ -556,7 +553,8 @@
 					},
 					{
 						"key": "authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvY3RvcGVyZiIsImlkIjoiaC1GdWNvQUJudEpCSTJ6NjQydFMiLCJleHAiOjE2NjgxMzg1NzcsImlhdCI6MTY2ODA1MjE3NywiaGFzaCI6ImRlMzE3Y2E3NTlmODQ5NjIxOTNlZjZhYWNjMTlmNjk5In0.zYVXw-fxxJH-ByTht6j1p3PnIdMmks6lqYvCz4GqzPk"
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvY3RvcGVyZiIsImlkIjoiaC1GdWNvQUJudEpCSTJ6NjQydFMiLCJleHAiOjE2NjgxMzg1NzcsImlhdCI6MTY2ODA1MjE3NywiaGFzaCI6ImRlMzE3Y2E3NTlmODQ5NjIxOTNlZjZhYWNjMTlmNjk5In0.zYVXw-fxxJH-ByTht6j1p3PnIdMmks6lqYvCz4GqzPk",
+						"disabled": true
 					},
 					{
 						"key": "cookie",
@@ -611,6 +609,129 @@
 						"design",
 						"projects",
 						"{{projectId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createNewWorkspace",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});\r",
+							"\r",
+							"var jsonResponse = pm.response.json();\r",
+							"console.log(jsonResponse);\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"workspaceId\", jsonResponse.id);\r",
+							"\r",
+							"\r",
+							"var jsonResponse = pm.response.json();\r",
+							"console.log(jsonResponse);\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"userId\", jsonResponse.userId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvY3RvcGVyZiIsImlkIjoiaC1GdWNvQUJudEpCSTJ6NjQydFMiLCJleHAiOjE2Njg1NDcyMzYsImlhdCI6MTY2ODQ2MDgzNiwiaGFzaCI6ImRlMzE3Y2E3NTlmODQ5NjIxOTNlZjZhYWNjMTlmNjk5In0.Tcm9UZE58DbcCD67jRWR-utv6yH61zC7Tma42cGRGCs",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"\",\n  \"userId\": \"{{userId}}\",\n  \"name\": \"Hello World11\",\n  \"description\": \"string\",\n  \"created\": \"2022-11-14T21:29:32.771Z\",\n  \"lastModified\": \"2022-11-14T21:29:32.771Z\"\n}"
+				},
+				"url": {
+					"raw": "https://api.octoperf.com/workspaces?workspaceId={{id}}&userId={{userId}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"octoperf",
+						"com"
+					],
+					"path": [
+						"workspaces"
+					],
+					"query": [
+						{
+							"key": "workspaceId",
+							"value": "{{id}}"
+						},
+						{
+							"key": "userId",
+							"value": "{{userId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteWorkspace",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvY3RvcGVyZiIsImlkIjoiaC1GdWNvQUJudEpCSTJ6NjQydFMiLCJleHAiOjE2Njg1NDcyMzYsImlhdCI6MTY2ODQ2MDgzNiwiaGFzaCI6ImRlMzE3Y2E3NTlmODQ5NjIxOTNlZjZhYWNjMTlmNjk5In0.Tcm9UZE58DbcCD67jRWR-utv6yH61zC7Tma42cGRGCs",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://api.octoperf.com/workspaces/{{workspaceId}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"octoperf",
+						"com"
+					],
+					"path": [
+						"workspaces",
+						"{{workspaceId}}"
 					]
 				}
 			},
