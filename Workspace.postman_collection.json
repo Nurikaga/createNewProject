@@ -69,6 +69,107 @@
 			"response": []
 		},
 		{
+			"name": "createNewWorkspace",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
+							"});\r",
+							"\r",
+							"var jsonResponse = pm.response.json();\r",
+							"console.log(jsonResponse);\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"workspaceId\", jsonResponse.id);\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"userId\", jsonResponse.userId);\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"workspaceName\", jsonResponse.name);\r",
+							"\r",
+							"\r",
+							"pm.test(\"userId\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"userId\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"workspaceId\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"workspaceName\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "accept",
+						"value": "*/*"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvY3RvcGVyZiIsImlkIjoiaC1GdWNvQUJudEpCSTJ6NjQydFMiLCJleHAiOjE2Njg1NDcyMzYsImlhdCI6MTY2ODQ2MDgzNiwiaGFzaCI6ImRlMzE3Y2E3NTlmODQ5NjIxOTNlZjZhYWNjMTlmNjk5In0.Tcm9UZE58DbcCD67jRWR-utv6yH61zC7Tma42cGRGCs",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"id\": \"\",\n  \"userId\": \"{{userId}}\",\n  \"name\": \"Hello World\",\n  \"description\": \"\",\n  \"created\": \"2022-11-14T21:29:32.771Z\",\n  \"lastModified\": \"2022-11-14T21:29:32.771Z\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.octoperf.com/workspaces",
+					"protocol": "https",
+					"host": [
+						"api",
+						"octoperf",
+						"com"
+					],
+					"path": [
+						"workspaces"
+					],
+					"query": [
+						{
+							"key": "workspaceId",
+							"value": "{{workspaceId}}",
+							"disabled": true
+						},
+						{
+							"key": "userId",
+							"value": "{{userId}}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "member-of",
 			"event": [
 				{
@@ -83,24 +184,6 @@
 							"var responseData = pm.response.json();\r",
 							"console.log(responseData[1]);\r",
 							"\r",
-							"pm.test(\"Verify name equals to <Select_insurance_Plan> for <member-of> request\", function(){\r",
-							"    pm.expect(responseData[1].name).to.equal('Select_insurance_Plan');\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Verify id equals to [uraTTYQBriPkCenVnCZY] for <>member-of request\", function(){\r",
-							" pm.expect(responseData[1].id).to.equal('uraTTYQBriPkCenVnCZY');\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Verify userId equals to [h-FucoABntJBI2z642tS] for <>member-of request\", function(){\r",
-							" pm.expect(responseData[1].userId).to.equal('h-FucoABntJBI2z642tS');\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Verify description equals to [ar insurance\\nhouse insurance] for <>member-of request\", function(){\r",
-							" pm.expect(responseData[1].description).to.equal('Car insurance\\nhouse insurance');\r",
-							"});\r",
-							"\r",
-							"console.log(responseData[0]);\r",
-							"\r",
 							"pm.test(\"Verify name equals to <Default> for <member-of> request\", function(){\r",
 							"    pm.expect(responseData[0].name).to.equal('Default');\r",
 							"});\r",
@@ -108,22 +191,11 @@
 							"pm.test(\"Verify created equals to <1667748763856> for <member-of> request\", function(){\r",
 							"    pm.expect(responseData[0].created).to.equal(1667748763856);\r",
 							"});\r",
-							"\r",
-							"pm.test(\"Verify description equals to <> for <member-of> request\", function(){\r",
-							"    pm.expect(responseData[0].description).to.equal('');\r",
-							"});\r",
-							"\r",
-							"\r",
 							"console.log(responseData[1].id);\r",
-							"//created new variable\r",
-							"postman.setEnvironmentVariable(\"workspaceId\", responseData[1].id);\r",
 							"\r",
-							"\r",
-							"//created new environment variable\r",
-							"postman.setEnvironmentVariable(\"userId\", responseData[1].userId);\r",
-							"\r",
-							"\r",
-							"\r",
+							"pm.test(\"Verify name equals to <Default> for <member-of> request\", function(){\r",
+							"    pm.expect(responseData[0].name).to.equal('Default');\r",
+							"});\r",
 							""
 						],
 						"type": "text/javascript"
@@ -224,35 +296,40 @@
 							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"description\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"\");\r",
-							"});\r",
+							"var jsonResponse = pm.response.json();\r",
+							"console.log(jsonResponse);\r",
 							"\r",
-							"pm.test(\"name\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"KN\");\r",
-							"});\r",
 							"\r",
-							"pm.test(\"tags\", function () {\r",
-							"    var jsonData = pm.response.json();\r",
-							"    pm.expect(jsonData.tags).to.eql([]);\r",
-							"});\r",
+							"postman.setEnvironmentVariable(\"projectId\", jsonResponse.id);\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"projectName\", jsonResponse.name);\r",
+							"\r",
+							"postman.setEnvironmentVariable(\"description\", jsonResponse.object);\r",
+							"\r",
+							"\r",
 							"\r",
 							"pm.test(\"type\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"DESIGN\");\r",
 							"});\r",
 							"\r",
 							"pm.test(\"userId\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"h-FucoABntJBI2z642tS\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"userId\");\r",
 							"});\r",
 							"\r",
 							"pm.test(\"workspaceId\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"uraTTYQBriPkCenVnCZY\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
 							"});\r",
 							"\r",
-							"var jsonResponse = pm.response.json();\r",
-							"console.log(jsonResponse);\r",
+							"pm.test(\"projectId\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
 							"\r",
-							"postman.setEnvironmentVariable(\"projectId\", jsonResponse.id);"
+							"pm.test(\"projectName\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -335,7 +412,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id\": \"\",\r\n    \"created\": \"2022-03-09T01:58:44.142Z\",\r\n    \"lastModified\": \"2021-10-09T01:58:44.142Z\",\r\n    \"userId\": \"{{userId}}\",\r\n    \"workspaceId\": \"{{workspaceId}}\",\r\n    \"name\": \"KN valid #\",\r\n    \"description\": \"\",\r\n    \"type\": \"DESIGN\",\r\n    \"tags\": []\r\n}"
+					"raw": "{\r\n    \"id\": \"\",\r\n    \"created\": \"2022-03-09T01:58:44.142Z\",\r\n    \"lastModified\": \"2021-10-09T01:58:44.142Z\",\r\n    \"userId\": \"{{userId}}\",\r\n    \"workspaceId\": \"{{workspaceId}}\",\r\n    \"name\": \"KN valid\",\r\n    \"description\": \"\",\r\n    \"type\": \"DESIGN\",\r\n    \"tags\": []\r\n}"
 				},
 				"url": {
 					"raw": "https://api.octoperf.com/design/projects",
@@ -381,8 +458,6 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"\r",
-							"\r",
 							"pm.test(\"tags\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData.tags).to.eql([]);\r",
@@ -394,11 +469,15 @@
 							"});\r",
 							"\r",
 							"pm.test(\"userId\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"h-FucoABntJBI2z642tS\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"userId\");\r",
 							"});\r",
 							"\r",
 							"pm.test(\"workspaceId\", function () {\r",
-							"    pm.expect(pm.response.text()).to.include(\"uraTTYQBriPkCenVnCZY\");\r",
+							"    pm.expect(pm.response.text()).to.include(\"id\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"editProjectName\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"name\");\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -520,7 +599,9 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							""
+							"pm.test(\"Response time is less than 204ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(204);\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
@@ -615,89 +696,20 @@
 			"response": []
 		},
 		{
-			"name": "createNewWorkspace",
+			"name": "deleteWorkspace",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([201, 202]);\r",
-							"});\r",
-							"\r",
-							"var jsonResponse = pm.response.json();\r",
-							"console.log(jsonResponse);\r",
-							"\r",
-							"postman.setEnvironmentVariable(\"workspaceId\", jsonResponse.id);\r",
-							"\r",
-							"\r",
-							"var jsonResponse = pm.response.json();\r",
-							"console.log(jsonResponse);\r",
-							"\r",
-							"postman.setEnvironmentVariable(\"userId\", jsonResponse.userId);"
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
 						],
 						"type": "text/javascript"
 					}
 				}
 			],
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{token}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [
-					{
-						"key": "accept",
-						"value": "*/*"
-					},
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJvY3RvcGVyZiIsImlkIjoiaC1GdWNvQUJudEpCSTJ6NjQydFMiLCJleHAiOjE2Njg1NDcyMzYsImlhdCI6MTY2ODQ2MDgzNiwiaGFzaCI6ImRlMzE3Y2E3NTlmODQ5NjIxOTNlZjZhYWNjMTlmNjk5In0.Tcm9UZE58DbcCD67jRWR-utv6yH61zC7Tma42cGRGCs",
-						"disabled": true
-					},
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"id\": \"\",\n  \"userId\": \"{{userId}}\",\n  \"name\": \"Hello World11\",\n  \"description\": \"string\",\n  \"created\": \"2022-11-14T21:29:32.771Z\",\n  \"lastModified\": \"2022-11-14T21:29:32.771Z\"\n}"
-				},
-				"url": {
-					"raw": "https://api.octoperf.com/workspaces?workspaceId={{id}}&userId={{userId}}",
-					"protocol": "https",
-					"host": [
-						"api",
-						"octoperf",
-						"com"
-					],
-					"path": [
-						"workspaces"
-					],
-					"query": [
-						{
-							"key": "workspaceId",
-							"value": "{{id}}"
-						},
-						{
-							"key": "userId",
-							"value": "{{userId}}"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "deleteWorkspace",
 			"request": {
 				"auth": {
 					"type": "bearer",
