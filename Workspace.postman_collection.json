@@ -135,7 +135,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"id\": \"\",\n  \"userId\": \"{{userId}}\",\n  \"name\": \"Hello World\",\n  \"description\": \"\",\n  \"created\": \"2022-11-14T21:29:32.771Z\",\n  \"lastModified\": \"2022-11-14T21:29:32.771Z\"\n}",
+					"raw": "{\n  \"id\": \"\",\n  \"userId\": \"\",\n  \"name\": \"Hello World2\",\n  \"description\": \"addd\",\n  \"created\": \"2022-11-14T21:29:32.771Z\",\n  \"lastModified\": \"2022-11-14T21:29:32.771Z\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -188,14 +188,6 @@
 							"    pm.expect(responseData[0].name).to.equal('Default');\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Verify created equals to <1667748763856> for <member-of> request\", function(){\r",
-							"    pm.expect(responseData[0].created).to.equal(1667748763856);\r",
-							"});\r",
-							"console.log(responseData[1].id);\r",
-							"\r",
-							"pm.test(\"Verify name equals to <Default> for <member-of> request\", function(){\r",
-							"    pm.expect(responseData[0].name).to.equal('Default');\r",
-							"});\r",
 							""
 						],
 						"type": "text/javascript"
@@ -304,9 +296,6 @@
 							"\r",
 							"postman.setEnvironmentVariable(\"projectName\", jsonResponse.name);\r",
 							"\r",
-							"postman.setEnvironmentVariable(\"description\", jsonResponse.object);\r",
-							"\r",
-							"\r",
 							"\r",
 							"pm.test(\"type\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"DESIGN\");\r",
@@ -335,6 +324,11 @@
 					}
 				}
 			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -367,7 +361,8 @@
 					},
 					{
 						"key": "content-type",
-						"value": "application/json;charset=UTF-8"
+						"value": "application/json;charset=UTF-8",
+						"disabled": true
 					},
 					{
 						"key": "cookie",
@@ -408,6 +403,11 @@
 					{
 						"key": "user-agent",
 						"value": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
 					}
 				],
 				"body": {
